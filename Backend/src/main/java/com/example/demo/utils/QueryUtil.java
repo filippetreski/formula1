@@ -1,11 +1,15 @@
 package com.example.demo.utils;
 
+import org.apache.jena.atlas.json.JSON;
+import org.apache.jena.atlas.json.JsonObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,8 +46,9 @@ public class QueryUtil {
                 while ((readLine = in.readLine()) != null) {
                     response.append(readLine);
                 }
-                in.close();
-                return response.toString();
+                JsonObject responseJson = JSON.parse(response.toString());
+                return Arrays.toString(responseJson.getObj("results").
+                        getArray("bindings").toArray());
             } else {
                 logger.log(Level.WARNING, "get request failed");
             }
