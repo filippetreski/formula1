@@ -17,6 +17,11 @@ public class FormulaOneDriversController {
 
     @GetMapping("/list/{limit}/{language}")
     public ResponseEntity<String> getDrivers(@PathVariable Integer limit, @PathVariable String language) {
-        return ResponseEntity.ok(this.service.getHomePageDrivers(limit, language));
+        return ResponseEntity.ok(this.service.getListOfDrivers(limit, language));
+    }
+
+    @GetMapping("/details/{name}/{en}")
+    public ResponseEntity<String> getDriverDetails(@PathVariable String name, @PathVariable String language) {
+        return ResponseEntity.ok(this.service.getDriverDetails(name, language));
     }
 }
