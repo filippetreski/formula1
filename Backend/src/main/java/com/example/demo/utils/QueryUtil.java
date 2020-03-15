@@ -26,31 +26,30 @@ public class QueryUtil {
         return baseUrl + encodeQuery(query);
     }
 
-    public static String getResultFromQuery(String query){
+    public static String getResultFromQuery(String query) {
         try {
             String readLine;
-            URL url = new URL(query);
+            URL url = new URL(getURLWithQuery(query));
             HttpURLConnection conection = (HttpURLConnection) url.openConnection();
             conection.setRequestMethod("GET");
-            conection.setRequestProperty("Content-Type","application/json");
+            conection.setRequestProperty("Content-Type", "application/json");
             int responseCode = conection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(conection.getInputStream()));
                 StringBuilder response = new StringBuilder();
-                while ((readLine = in .readLine()) != null) {
+                while ((readLine = in.readLine()) != null) {
                     response.append(readLine);
-                } in .close();
+                }
+                in.close();
                 return response.toString();
             } else {
-                logger.log(Level.WARNING,"GET Did NOT WORK");
+                logger.log(Level.WARNING, "get request failed");
             }
-            return null;
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
         }
-        catch (Exception e){
-            logger.log(Level.WARNING,e.getMessage());
-            return null;
-        }
+        return "{}";
     }
 }

@@ -17,7 +17,7 @@ public class FormulaOneController {
     }
 
     @GetMapping("/abstract/{language}")
-    public ResponseEntity<String> getAbstract(@PathVariable String language) {
+    public ResponseEntity<String> getAbstract(@PathVariable String language){
         return ResponseEntity.ok(this.service.getAbstract(language));
     }
 }
