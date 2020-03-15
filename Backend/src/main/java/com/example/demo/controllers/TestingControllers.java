@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
 import org.apache.jena.rdf.model.*;
 import org.springframework.http.ResponseEntity;
