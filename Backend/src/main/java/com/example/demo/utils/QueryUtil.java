@@ -1,11 +1,15 @@
 package com.example.demo.utils;
 
+import org.apache.jena.atlas.json.JSON;
+import org.apache.jena.atlas.json.JsonObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,31 +30,31 @@ public class QueryUtil {
         return baseUrl + encodeQuery(query);
     }
 
-    public static String getResultFromQuery(String query){
+    public static String getResultFromQuery(String query) {
         try {
             String readLine;
-            URL url = new URL(query);
+            URL url = new URL(getURLWithQuery(query));
             HttpURLConnection conection = (HttpURLConnection) url.openConnection();
             conection.setRequestMethod("GET");
-            conection.setRequestProperty("Content-Type","application/json");
+            conection.setRequestProperty("Content-Type", "application/json");
             int responseCode = conection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(conection.getInputStream()));
                 StringBuilder response = new StringBuilder();
-                while ((readLine = in .readLine()) != null) {
+                while ((readLine = in.readLine()) != null) {
                     response.append(readLine);
-                } in .close();
-                return response.toString();
+                }
+                JsonObject responseJson = JSON.parse(response.toString());
+                return Arrays.toString(responseJson.getObj("results").
+                        getArray("bindings").toArray());
             } else {
-                logger.log(Level.WARNING,"GET Did NOT WORK");
+                logger.log(Level.WARNING, "get request failed");
             }
-            return null;
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
         }
-        catch (Exception e){
-            logger.log(Level.WARNING,e.getMessage());
-            return null;
-        }
+        return "{}";
     }
 }
