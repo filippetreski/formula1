@@ -25,40 +25,82 @@ public class FormulaOneDriversService {
         return QueryUtil.getResultFromQuery(query);
     }
 
-    public String getDriverDetails(String name, String language) {
-        //THIS QUERY TAKES TOO MUCH TIME AND MUST BE SIMPLIFIED
-        //TODO SIMPLIFY THIS QUERY!
-        String query = "select ?subject \"Michael Schumacher\" as ?name ?thumbnail ?birthDate ?birthPlace ?points\n" +
-                "?numChampionships ?fastestLap ?firstRace ?firstWin ?lastRace ?lastWin ?numPodiums\n" +
-                "?numRaces ?numPoles ?wins ?nationality ?points ?championship ?deathDate ?quote ?abstract\n" +
+    public String search(String name,String language,Integer limit){
+        String query="select ?subject (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?thumbnail) (SAMPLE(?birthDate) AS ?birthDate) (SAMPLE(?birthPlace) AS ?birthPlace) (SAMPLE(?wins) AS ?wins) (SAMPLE(?nationality) AS ?nationality) (SAMPLE(?points) AS ?points) (SAMPLE(?deathDate) AS ?deathDate) (SAMPLE(?quote) AS ?quote) (SAMPLE(?abstract) AS ?abstract)\n" +
                 "where {\n" +
                 "?subject rdf:type dbo:FormulaOneRacer;\n" +
                 "         foaf:name ?name;\n" +
-                "         dbo:abstract ?abstract;\n" +
-                "         dbo:podiums ?podiums;\n" +
-                "         dbp:points ?points;\n" +
-                "         dbo:thumbnail ?thumbnail;\n" +
-                "         dbo:birthDate ?birthDate;\n" +
-                "         dbo:birthPlace ?birthPlace;\n" +
-                "         dbo:championships ?numChampionships;\n" +
-                "         dbo:fastestLap ?fastestLap;\n" +
-                "         dbo:firstRace ?firstRace;\n" +
-                "         dbo:firstWin ?firstWin;\n" +
-                "         dbo:lastRace ?lastRace;\n" +
-                "         dbo:lastWin ?lastWin;\n" +
-                "         dbo:podiums ?numPodiums;\n" +
-                "         dbo:races ?numRaces;\n" +
-                "         dbo:poles ?numPoles;\n" +
-                "         dbo:wins ?wins;\n" +
-                "         dbp:nationality ?nationality;\n" +
-                "         dbp:points ?points;\n" +
-                "         dbo:firstDriver ?championship.\n" +
+                "         dbo:abstract ?abstract." +
+                "    OPTIONAL { ?subject dbp:points ?points.}\n" +
+                "    OPTIONAL { ?subject dbo:podiums ?podiums.}\n" +
+                "    OPTIONAL { ?subject dbo:thumbnail ?thumbnail.}\n" +
+                "    OPTIONAL { ?subject dbo:birthDate ?birthDate.}\n" +
+                "    OPTIONAL { ?subject dbo:birthPlace ?birthPlace.}\n" +
+                "    OPTIONAL { ?subject dbo:wins ?wins.}\n" +
+                "    OPTIONAL { ?subject dbp:nationality ?nationality.}\n" +
                 "    OPTIONAL { ?subject dbo:deathDate ?deathDate.}\n" +
                 "    OPTIONAL { ?subject dbp:quote ?quote. }\n" +
                 "                  \n" +
-                "filter(lang(?name) = \"en\" && lang(?abstract) = \"en\")\n" +
+                "filter(lang(?name) = \""+language+"\" && lang(?abstract) = \""+language+"\" && contains(lcase(str(?name)),lcase(\""+name+"\")))\n" +
                 "}\n" +
-                "order by desc(?points)\n" +
+                "\n" +
+                "group by ?subject\n" +
+                "limit "+limit.toString();
+        return QueryUtil.getResultFromQuery(query);
+    }
+
+    public String getBasicDriverDetails(String fullName, String language) {
+        String subject = "<http://dbpedia.org/resource/"+fullName.replace(" ","_")+">";
+        String query = "select \""+subject+"\" as ?subject \""+fullName+"\" AS ?name (SAMPLE(?thumbnail) AS ?thumbnail) (SAMPLE(?birthDate) AS ?birthDate) (SAMPLE(?birthPlace) AS ?birthPlace) (SAMPLE(?wins) AS ?wins) (SAMPLE(?nationality) AS ?nationality) (SAMPLE(?points) AS ?points) (SAMPLE(?deathDate) AS ?deathDate) (SAMPLE(?quote) AS ?quote) (SAMPLE(?abstract) AS ?abstract)\n" +
+                "where{\n" +
+                "                ?subject rdf:type dbo:FormulaOneRacer; \n" +
+                "                         foaf:name ?name; \n" +
+                "                         dbo:abstract ?abstract. \n" +
+                "                    OPTIONAL { ?subject dbp:points ?points.} \n" +
+                "                    OPTIONAL { ?subject dbo:podiums ?podiums.} \n" +
+                "                    OPTIONAL { ?subject dbo:thumbnail ?thumbnail.} \n" +
+                "                    OPTIONAL { ?subject dbo:birthDate ?birthDate.} \n" +
+                "                    OPTIONAL { ?subject dbo:birthPlace ?birthPlace.} \n" +
+                "                    OPTIONAL { ?subject dbo:wins ?wins.} \n" +
+                "                    OPTIONAL { ?subject dbp:nationality ?nationality.} \n" +
+                "                    OPTIONAL { ?subject dbo:deathDate ?deathDate.} \n" +
+                "                    OPTIONAL { ?subject dbp:quote ?quote. } \n" +
+                "                                   \n" +
+                "                filter(lang(?name) = \"en\" && lang(?abstract) = \"en\") \n" +
+                "                } \n" +
+                "                 \n" +
+                "                group by ?subject \n" +
+                "                limit 1";
+        return QueryUtil.getResultFromQuery(query);
+    }
+
+    public String getMoreDriverDetails(String fullName, String language) {
+        String subject = "<http://dbpedia.org/resource/"+fullName.replace(" ","_")+">";
+        String query = "select \""+subject+"\" as ?subject \""+fullName+"\" AS ?name "+
+                "(SAMPLE(?numChampionships) AS ?numChampionships) \n" +
+                "(SAMPLE(?fastestLap) AS ?fastestLap)\n" +
+                "(SAMPLE(?firstRace) AS ?firstRace)\n" +
+                "(SAMPLE(?firstWin) AS ?firstWin)\n" +
+                "(SAMPLE(?lastRace) AS ?lastRace)\n" +
+                "(SAMPLE(?lastWin) AS ?lastWin)\n" +
+                "(SAMPLE(?numPodiums) AS ?numPodiums)\n" +
+                "(SAMPLE(?numRaces) AS ?numRaces)\n" +
+                "(SAMPLE(?numPoles) AS ?numPoles)\n" +
+                "where {\n" +
+                "?subject rdf:type dbo:FormulaOneRacer;\n" +
+                "foaf:name ?name. \n" +
+                "         OPTIONAL {?subject dbo:championships ?numChampionships.}\n" +
+                "         OPTIONAL {?subject dbo:fastestLap ?fastestLap.}\n" +
+                "         OPTIONAL {?subject dbo:firstRace ?firstRace.}\n" +
+                "         OPTIONAL {?subject dbo:firstWin ?firstWin.}\n" +
+                "         OPTIONAL {?subject dbo:lastRace ?lastRace.}\n" +
+                "         OPTIONAL {?subject dbo:lastWin ?lastWin.}\n" +
+                "         OPTIONAL {?subject dbo:podiums ?numPodiums.}\n" +
+                "         OPTIONAL {?subject dbo:races ?numRaces.}\n" +
+                "         OPTIONAL {?subject dbo:poles ?numPoles.}\n" +
+                "                  \n" +
+                "filter(lang(?name) = \"en\")\n" +
+                "}\n" +
                 "limit 1";
         return QueryUtil.getResultFromQuery(query);
     }
