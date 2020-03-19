@@ -15,7 +15,6 @@ export class AboutComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
     this.route.paramMap.pipe(
       map(it=> it.get('language')),
       switchMap(it => this.api.getFOneAbstract(`${it}`))
