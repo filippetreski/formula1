@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Formula One';
-  language = 'en';
 
-  constructor(private route: ActivatedRoute, private router: Router){
-  }
-
-  onChangeLanguage(language: string){
-      this.router.navigateByUrl(this.router.url.replace(this.language,language))
-      this.language = language;
-  }
+  constructor() {}
 }
