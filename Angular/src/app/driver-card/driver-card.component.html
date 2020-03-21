@@ -1,5 +1,8 @@
 <a *ngIf="driverObject.thumbnail" [href]="driverObject.thumbnail['value']"><img src="{{driverObject.thumbnail['value']}}" alt="Picture of driver"/></a>
-<span *ngIf="driverObject.name"><h3>{{driverObject.name['value']}}</h3></span>
+<span *ngIf="driverObject.name">
+  <a [routerLink]="['/driverDetails/'+driverObject.name['value']]" queryParamsHandling="merge">
+  <h3>{{driverObject.name['value']}}</h3>
+</a></span>
 <span *ngIf="driverObject.comment"><p>{{driverObject.comment['value']}}</p></span>
 <span *ngIf="driverObject.points"><p>Points: {{driverObject.points['value']}}</p></span>
 <span *ngIf="driverObject.subject"><a [href]="driverObject.subject['value']" target="_blank">dbpedia link</a></span>

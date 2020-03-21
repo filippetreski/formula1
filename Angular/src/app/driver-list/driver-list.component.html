@@ -8,3 +8,7 @@
   <app-driver-card [driverObject]="driver"></app-driver-card>
   </div>
 </div>
+
+<div *ngIf="drivers && drivers.length === 0 && searchText">
+  <h3>We could not provide any results with the information provided</h3>
+</div>

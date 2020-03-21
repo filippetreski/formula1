@@ -22,4 +22,8 @@ export class ApiService {
   searchDrivers(searchTerm: string, language: string, limit: number): Observable<Array<Driver>> {
     return this.httpClient.get<Array<Driver>>(`/api/formula_one/drivers/search/${searchTerm}/${limit}/${language}`);
   }
+
+  getDriverDetails(name: string, language: string): Observable<object> {
+    return this.httpClient.get<object>(`/api/formula_one/drivers/details/basic/${name}/${language}`);
+  }
 }

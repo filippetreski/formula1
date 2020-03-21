@@ -16,7 +16,7 @@ export class DriverListComponent implements OnInit {
   drivers: Array<Driver>;
   searchTerm$ = new Subject();
   limit = 10;
-  searchText = '';
+  searchText: string | null;
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) {
   }
@@ -38,7 +38,6 @@ export class DriverListComponent implements OnInit {
       switchMap(it =>
         this.api.searchDrivers(`${it}`, this.route.snapshot.queryParamMap.get('language'), this.limit))
     ).subscribe(it => {
-      console.log(it);
       this.drivers = it;
     });
 
