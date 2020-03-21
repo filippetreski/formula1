@@ -7,19 +7,27 @@ import { AboutComponent } from './about/about.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
+import { DriverCardComponent } from './driver-card/driver-card.component';
+import { DriverListComponent } from './driver-list/driver-list.component';
+import {FormsModule} from '@angular/forms';
+import { DriverDetailsComponent } from './driver-details/driver-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    DriverCardComponent,
+    DriverListComponent,
+    DriverDetailsComponent
   ],
-  imports: [
-  BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
   providers: [ApiService],
   bootstrap: [AppComponent]
 })

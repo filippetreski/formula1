@@ -1,2 +1,7 @@
-<div>DRIVERS TUKA LISTAJ</div>
+<div *ngIf="drivers">
+  <div *ngFor="let driver of drivers">
+    <app-driver-card [driverObject]="driver"></app-driver-card>
+  </div>
+</div>
+<h1 *ngIf="!drivers"> Please wait for the page to load, or try choosing another language</h1>
 <div>TUKA LISTAJ TIMOVI</div>

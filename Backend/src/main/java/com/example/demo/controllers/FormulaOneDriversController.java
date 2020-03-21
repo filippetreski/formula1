@@ -27,11 +27,6 @@ public class FormulaOneDriversController {
 
     @GetMapping("/details/basic/{fullName}/{language}")
     public ResponseEntity<String> getBasicDriverDetails(@PathVariable String fullName, @PathVariable String language) {
-        return ResponseEntity.ok(this.service.getBasicDriverDetails(fullName, language));
-    }
-
-    @GetMapping("/details/more/{fullName}/{language}")
-    public ResponseEntity<String> getMoreDriverDetails(@PathVariable String fullName, @PathVariable String language) {
-        return ResponseEntity.ok(this.service.getMoreDriverDetails(fullName, language));
+        return ResponseEntity.ok(this.service.getDriverDetails(fullName,language));
     }
 }
