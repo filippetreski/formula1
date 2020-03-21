@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../api.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -12,11 +12,21 @@ import {Observable} from 'rxjs';
 export class AboutComponent implements OnInit {
 
   abstract: string;
+  f1URI: string;
+  language$ = new Subject();
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
+
+    this.language$.pipe(
+      switchMap(it => this.api.getFOneAbstract(`${it}`)))
+      .subscribe(it => {
+        this.abstract = it[0].abstract.value;
+        this.f1URI = it[0].subject.value;
+      });
+
     this.route.queryParamMap.subscribe(it => {
       if (!it || !it.get('language')) {
         this.router.navigate([], {
@@ -24,22 +34,9 @@ export class AboutComponent implements OnInit {
           relativeTo: this.route,
           queryParamsHandling: 'merge'
         });
-      }
-    });
-
-    this.route.queryParamMap.pipe(
-      switchMap(result => {
-        if (!result || !result.get('language')) {
-          return new Observable();
-        } else {
-          return this.api.getFOneAbstract(result.get('language'));
-        }
-      })
-    ).subscribe(result => {
-      if (result && result[0] && result[0].abstract) {
-        this.abstract = result[0].abstract.value;
+      } else {
+        this.language$.next(it.get('language'));
       }
     });
   }
-
 }

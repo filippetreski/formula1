@@ -1,0 +1,10 @@
+<h1>DRIVER COMPONENT</h1>
+<form (submit)="search()">
+  <input type="text" placeholder="Please search by name" [(ngModel)]="searchText" name ="searchText" required/>
+  <button type="submit">Search</button>
+</form>
+<div *ngIf="drivers && drivers.length>0">
+  <div *ngFor="let driver of drivers">
+  <app-driver-card [driverObject]="driver"></app-driver-card>
+  </div>
+</div>

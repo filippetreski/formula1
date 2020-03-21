@@ -18,7 +18,7 @@ public class FormulaOneDriversService {
                 "?subject rdfs:comment ?comment.\n" +
                 "?subject dbp:points ?points. \n" +
                 "?subject dbo:thumbnail ?thumbnail \n" +
-                "filter(lang(?name) = \"" + language + "\" && lang(?comment) = \"" + language + "\")\n" +
+                "filter(lang(?comment) = \"" + language + "\")\n" +
                 "}\n" +
                 "order by desc(?points)" +
                 "limit " + limit.toString();
@@ -41,7 +41,7 @@ public class FormulaOneDriversService {
                 "    OPTIONAL { ?subject dbo:deathDate ?deathDate.}\n" +
                 "    OPTIONAL { ?subject dbp:quote ?quote. }\n" +
                 "                  \n" +
-                "filter(lang(?name) = \""+language+"\" && lang(?abstract) = \""+language+"\" && contains(lcase(str(?name)),lcase(\""+name+"\")))\n" +
+                "filter(lang(?abstract) = \""+language+"\" && contains(lcase(str(?name)),lcase(\""+name+"\")))\n" +
                 "}\n" +
                 "\n" +
                 "group by ?subject\n" +
@@ -66,7 +66,7 @@ public class FormulaOneDriversService {
                 "                    OPTIONAL { ?subject dbo:deathDate ?deathDate.} \n" +
                 "                    OPTIONAL { ?subject dbp:quote ?quote. } \n" +
                 "                                   \n" +
-                "                filter(lang(?name) = \"en\" && lang(?abstract) = \"en\") \n" +
+                "                filter(lang(?abstract) = \"en\") \n" +
                 "                } \n" +
                 "                 \n" +
                 "                group by ?subject \n" +
@@ -98,8 +98,6 @@ public class FormulaOneDriversService {
                 "         OPTIONAL {?subject dbo:podiums ?numPodiums.}\n" +
                 "         OPTIONAL {?subject dbo:races ?numRaces.}\n" +
                 "         OPTIONAL {?subject dbo:poles ?numPoles.}\n" +
-                "                  \n" +
-                "filter(lang(?name) = \"en\")\n" +
                 "}\n" +
                 "limit 1";
         return QueryUtil.getResultFromQuery(query);

@@ -1,0 +1,24 @@
+<div *ngIf="driverObject">
+<a *ngIf="driverObject.thumbnail" [href]="driverObject.thumbnail['value']"><img src="{{driverObject.thumbnail['value']}}" alt="Picture of driver"/></a>
+<span *ngIf="driverObject.name"><h3>{{driverObject.name['value']}}</h3></span>
+<span *ngIf="driverObject.comment"><p>{{driverObject.comment['value']}}</p></span>
+<span *ngIf="driverObject.points"><p>Points: {{driverObject.points['value']}}</p></span>
+<span *ngIf="driverObject.abstract"><p>{{driverObject.abstract['value']}}</p></span>
+<span *ngIf="driverObject.podiums"><p>Number of podiums: {{driverObject.podiums['value']}}</p></span>
+<span *ngIf="driverObject.birthDate"><p>Birth date: {{driverObject.birthDate['value']}}</p></span>
+<span *ngIf="driverObject.birthPlace"><a [href]="driverObject.birthPlace['value']" target="_blank">Read more about the birth place</a></span>
+<span *ngIf="driverObject.deathDate"><p>Death date: {{driverObject.deathDate['value']}}</p></span>
+<span *ngIf="driverObject.wins"><p>Number of wins {{driverObject.wins['value']}}</p></span>
+<span *ngIf="driverObject.nationality"><p>Nationality: {{driverObject.nationality['value']}}</p></span>
+<span *ngIf="driverObject.quote"><p>Quote: {{driverObject.quote['value']}}</p></span>
+<span *ngIf="driverObject.numChampionships"><p>Number of championships: {{driverObject.numChampionships['value']}}</p></span>
+<span *ngIf="driverObject.fastestLap"><p>Fastest lap: {{driverObject.fastestLap['value']}}</p></span>
+<span *ngIf="driverObject.firstRace"><p>First Race: {{driverObject.firstRace['value']}}</p></span>
+<span *ngIf="driverObject.firstWin"><p>First win: {{driverObject.firstWin['value']}}</p></span>
+<span *ngIf="driverObject.lastRace"><p>Last Race: {{driverObject.lastRace['value']}}</p></span>
+<span *ngIf="driverObject.lastWin"><p>Last win: {{driverObject.lastWin['value']}}</p></span>
+<span *ngIf="driverObject.numPodiums"><p>Number of podiums: {{driverObject.numPodiums['value']}}</p></span>
+<span *ngIf="driverObject.numRaces"><p>Number of races: {{driverObject.numRaces['value']}}</p></span>
+<span *ngIf="driverObject.numPoles"><p>Number of poles: {{driverObject.numPoles['value']}}</p></span>
+<span *ngIf="driverObject.subject"><a [href]="driverObject.subject['value']" target="_blank">dbpedia link</a></span>
+</div>

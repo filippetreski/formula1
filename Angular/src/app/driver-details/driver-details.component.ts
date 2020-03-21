@@ -1,30 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Driver} from '../dto/Driver';
+import {Subject} from 'rxjs';
 import {ApiService} from '../api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {Driver} from '../dto/Driver';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-driver-details',
+  templateUrl: './driver-details.component.html',
+  styleUrls: ['./driver-details.component.css']
 })
-export class HomeComponent implements OnInit {
+export class DriverDetailsComponent implements OnInit {
 
-  drivers: Array<Driver> | null;
+  driverObject: Driver;
   language$ = new Subject();
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) {
   }
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.language$.pipe(
-      switchMap(it => this.api.getListOfDrivers(`${it}`, 4))
-    ).subscribe(result => {
-      this.drivers = result;
-    });
+      switchMap(it => this.api.getFOneAbstract(`${it}`)))
+      .subscribe(it => {
+        this.driverObject = it;
+      });
 
     this.route.queryParamMap.subscribe(it => {
       if (!it || !it.get('language')) {
@@ -37,6 +37,8 @@ export class HomeComponent implements OnInit {
         this.language$.next(it.get('language'));
       }
     });
+
+    // this.route.paramMap.subscribe(it => )
   }
 
 }
