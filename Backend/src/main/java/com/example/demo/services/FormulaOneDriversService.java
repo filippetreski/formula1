@@ -26,12 +26,12 @@ public class FormulaOneDriversService {
     }
 
     public String search(String name,String language,Integer limit){
-        String query="select ?subject (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?thumbnail) (SAMPLE(?birthDate) AS ?birthDate) (SAMPLE(?birthPlace) AS ?birthPlace) (SAMPLE(?wins) AS ?wins) (SAMPLE(?nationality) AS ?nationality) (SAMPLE(?points) AS ?points) (SAMPLE(?deathDate) AS ?deathDate) (SAMPLE(?quote) AS ?quote) (SAMPLE(?abstract) AS ?abstract)\n" +
+        String query="select ?subject (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?thumbnail) (SAMPLE(?birthDate) AS ?birthDate) (SAMPLE(?birthPlace) AS ?birthPlace) (SAMPLE(?wins) AS ?wins) (SAMPLE(?nationality) AS ?nationality) (SAMPLE(?points) AS ?points) (SAMPLE(?deathDate) AS ?deathDate) (SAMPLE(?quote) AS ?quote) (SAMPLE(?comment) AS ?comment)\n" +
                 "where {\n" +
                 "?subject rdf:type dbo:FormulaOneRacer;\n" +
-                "         foaf:name ?name;\n" +
-                "         dbo:abstract ?abstract." +
+                "         foaf:name ?name.\n" +
                 "    OPTIONAL { ?subject dbp:points ?points.}\n" +
+                "    OPTIONAL { ?subject rdfs:comment ?comment.}\n" +
                 "    OPTIONAL { ?subject dbo:podiums ?podiums.}\n" +
                 "    OPTIONAL { ?subject dbo:thumbnail ?thumbnail.}\n" +
                 "    OPTIONAL { ?subject dbo:birthDate ?birthDate.}\n" +
@@ -41,7 +41,7 @@ public class FormulaOneDriversService {
                 "    OPTIONAL { ?subject dbo:deathDate ?deathDate.}\n" +
                 "    OPTIONAL { ?subject dbp:quote ?quote. }\n" +
                 "                  \n" +
-                "filter(lang(?abstract) = \""+language+"\" && contains(lcase(str(?name)),lcase(\""+name+"\")))\n" +
+                "filter(lang(?comment) = \""+language+"\" && contains(lcase(str(?name)),lcase(\""+name+"\")))\n" +
                 "}\n" +
                 "\n" +
                 "group by ?subject\n" +

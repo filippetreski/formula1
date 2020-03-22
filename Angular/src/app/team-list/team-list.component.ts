@@ -24,16 +24,6 @@ export class TeamListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.all();
-  }
-
-  all() {
-    this.router.navigate([], {
-      queryParams: {
-        language: this.route.snapshot.queryParamMap.get("language")
-      },
-      relativeTo: this.route
-    });
 
     this.language$
       .pipe(
@@ -78,6 +68,7 @@ export class TeamListComponent implements OnInit {
         this.language$.next(it.get("language"));
       }
       if (it && it.get("searchTerm")) {
+        this.searchText = it.get("searchTerm");
         this.searchTerm$.next(it.get("searchTerm"));
       }
     });
@@ -97,7 +88,15 @@ export class TeamListComponent implements OnInit {
         },
         relativeTo: this.route
       });
-      this.all();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.router.navigate([], {
+      queryParams: {
+        language: this.route.snapshot.queryParamMap.get("language")
+      },
+      relativeTo: this.route
+    });
   }
 }

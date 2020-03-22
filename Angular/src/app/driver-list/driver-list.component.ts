@@ -24,12 +24,7 @@ export class DriverListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.router.navigate([], {
-      queryParams: {
-        language: this.route.snapshot.queryParamMap.get("language")
-      },
-      relativeTo: this.route
-    });
+
     this.language$
       .pipe(
         switchMap(it => {
@@ -59,6 +54,7 @@ export class DriverListComponent implements OnInit {
         )
       )
       .subscribe(it => {
+        console.log(it);
         this.drivers = it;
       });
 
@@ -73,6 +69,7 @@ export class DriverListComponent implements OnInit {
         this.language$.next(it.get("language"));
       }
       if (it && it.get("searchTerm")) {
+        this.searchText = it.get("searchTerm");
         this.searchTerm$.next(it.get("searchTerm"));
       }
     });
@@ -86,5 +83,14 @@ export class DriverListComponent implements OnInit {
         queryParamsHandling: "merge"
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.router.navigate([], {
+      queryParams: {
+        language: this.route.snapshot.queryParamMap.get("language")
+      },
+      relativeTo: this.route
+    });
   }
 }
