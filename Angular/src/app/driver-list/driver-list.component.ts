@@ -35,7 +35,7 @@ export class DriverListComponent implements OnInit {
               this.limit
             );
           } else {
-            return this.api.searchDrivers("", `${it}`, this.limit);
+            return this.api.getListOfDrivers( `${it}`, this.limit);
           }
         })
       )
@@ -81,6 +81,13 @@ export class DriverListComponent implements OnInit {
         queryParams: { searchTerm: this.searchText },
         relativeTo: this.route,
         queryParamsHandling: "merge"
+      });
+    } else {
+      this.router.navigate([], {
+        queryParams: {
+          language: this.route.snapshot.queryParamMap.get("language")
+        },
+        relativeTo: this.route
       });
     }
   }
