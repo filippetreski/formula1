@@ -1,7 +1,15 @@
 <div *ngIf="drivers">
+  <h2>Drivers</h2>
   <div *ngFor="let driver of drivers">
     <app-driver-card [driverObject]="driver"></app-driver-card>
   </div>
 </div>
-<h1 *ngIf="!drivers"> Please wait for the page to load, or try choosing another language</h1>
-<div>TUKA LISTAJ TIMOVI</div>
+<div *ngIf="teams">
+  <h2>Teams</h2>
+  <div *ngFor="let team of teams">
+    <app-team-card [teamObject]="team"></app-team-card>
+  </div>
+</div>
+<h1 *ngIf="!drivers || !teams">
+  Please wait for the page to load, or try choosing another language
+</h1>

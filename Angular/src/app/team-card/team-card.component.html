@@ -1,0 +1,15 @@
+<span *ngIf="teamObject.picture">
+  <img src="{{ teamObject.picture['value'] }}" alt="Picture of team"
+/></span>
+<span *ngIf="teamObject.name">
+  <h3>{{ teamObject.name["value"] }}</h3></span
+>
+<span *ngIf="teamObject.description"
+  ><p>{{ teamObject.description["value"] }}</p></span
+>
+<span *ngIf="teamObject.wins"
+  ><p>Wins: {{ teamObject.wins["value"] }}</p></span
+>
+<span *ngIf="teamObject.webLink"
+  ><a [href]="teamObject.webLink['value']" target="_blank">WEBPAGE</a></span
+>

@@ -11,6 +11,8 @@ import { DriverCardComponent } from './driver-card/driver-card.component';
 import { DriverListComponent } from './driver-list/driver-list.component';
 import {FormsModule} from '@angular/forms';
 import { DriverDetailsComponent } from './driver-details/driver-details.component';
+import { TeamListComponent } from './team-list/team-list.component';
+import { TeamCardComponent } from './team-card/team-card.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DriverDetailsComponent } from './driver-details/driver-details.componen
     HomeComponent,
     DriverCardComponent,
     DriverListComponent,
-    DriverDetailsComponent
+    DriverDetailsComponent,
+    TeamListComponent,
+    TeamCardComponent
   ],
     imports: [
         BrowserModule,

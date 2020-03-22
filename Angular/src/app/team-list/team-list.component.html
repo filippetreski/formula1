@@ -1,0 +1,21 @@
+<h1>TEAMS COMPONENT</h1>
+<form (submit)="search()">
+  <input
+    type="text"
+    placeholder="Please search by name"
+    [(ngModel)]="searchText"
+    name="searchText"
+    required
+  />
+
+  <button type="submit">Search</button>
+</form>
+<div *ngIf="teams && teams.length > 0">
+  <div *ngFor="let team of teams">
+    <app-team-card [teamObject]="team"></app-team-card>
+  </div>
+</div>
+
+<div *ngIf="teams && teams.length === 0 && searchText">
+  <h3>We could not provide any results with the information provided</h3>
+</div>

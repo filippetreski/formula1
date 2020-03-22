@@ -1,20 +1,20 @@
+import { Team } from "./../dto/Team";
 import { Component, OnInit } from "@angular/core";
 import { Subject } from "rxjs";
 import { ApiService } from "../api.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { switchMap } from "rxjs/operators";
-import { Driver } from "../dto/Driver";
 
 @Component({
-  selector: "app-driver-list",
-  templateUrl: "./driver-list.component.html",
-  styleUrls: ["./driver-list.component.css"]
+  selector: "app-team-list",
+  templateUrl: "./team-list.component.html",
+  styleUrls: ["./team-list.component.css"]
 })
-export class DriverListComponent implements OnInit {
+export class TeamListComponent implements OnInit {
   language$ = new Subject();
-  drivers: Array<Driver>;
+  teams: Array<Team>;
   searchTerm$ = new Subject();
-  limit = 10;
+  limit = 150;
   searchText: string | null;
 
   constructor(
@@ -24,34 +24,39 @@ export class DriverListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.all();
+  }
+
+  all() {
     this.router.navigate([], {
       queryParams: {
         language: this.route.snapshot.queryParamMap.get("language")
       },
       relativeTo: this.route
     });
+
     this.language$
       .pipe(
         switchMap(it => {
           if (this.route.snapshot.queryParamMap.get("searchTerm")) {
-            return this.api.searchDrivers(
+            return this.api.searchTeams(
               this.route.snapshot.queryParamMap.get("searchTerm"),
               `${it}`,
               this.limit
             );
           } else {
-            return this.api.searchDrivers("", `${it}`, this.limit);
+            return this.api.getListOfTeams(`${it}`, this.limit);
           }
         })
       )
       .subscribe(it => {
-        this.drivers = it;
+        this.teams = it;
       });
 
     this.searchTerm$
       .pipe(
         switchMap(it =>
-          this.api.searchDrivers(
+          this.api.searchTeams(
             `${it}`,
             this.route.snapshot.queryParamMap.get("language"),
             this.limit
@@ -59,7 +64,7 @@ export class DriverListComponent implements OnInit {
         )
       )
       .subscribe(it => {
-        this.drivers = it;
+        this.teams = it;
       });
 
     this.route.queryParamMap.subscribe(it => {
@@ -85,6 +90,14 @@ export class DriverListComponent implements OnInit {
         relativeTo: this.route,
         queryParamsHandling: "merge"
       });
+    } else {
+      this.router.navigate([], {
+        queryParams: {
+          language: this.route.snapshot.queryParamMap.get("language")
+        },
+        relativeTo: this.route
+      });
+      this.all();
     }
   }
 }
