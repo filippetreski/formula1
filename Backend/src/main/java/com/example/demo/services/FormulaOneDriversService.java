@@ -26,7 +26,9 @@ public class FormulaOneDriversService {
     }
 
     public String search(String name,String language,Integer limit){
-        String query="select ?subject (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?thumbnail) (SAMPLE(?birthDate) AS ?birthDate) (SAMPLE(?birthPlace) AS ?birthPlace) (SAMPLE(?wins) AS ?wins) (SAMPLE(?nationality) AS ?nationality) (SAMPLE(?points) AS ?points) (SAMPLE(?deathDate) AS ?deathDate) (SAMPLE(?quote) AS ?quote) (SAMPLE(?comment) AS ?comment)\n" +
+        String query="select ?subject (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?thumbnail) (SAMPLE(?birthDate) AS ?birthDate) (SAMPLE(?birthPlace)" +
+                " AS ?birthPlace) (SAMPLE(?wins) AS ?wins) (SAMPLE(?nationality) AS ?nationality) (SAMPLE(?points) AS ?points) (SAMPLE(?deathDate) AS ?deathDate) " +
+                "(SAMPLE(?quote) AS ?quote) (SAMPLE(?comment) AS ?comment)\n" +
                 "where {\n" +
                 "?subject rdf:type dbo:FormulaOneRacer;\n" +
                 "         foaf:name ?name.\n" +
