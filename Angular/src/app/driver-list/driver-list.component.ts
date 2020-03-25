@@ -14,7 +14,7 @@ export class DriverListComponent implements OnInit {
   language$ = new Subject();
   drivers: Array<Driver>;
   searchTerm$ = new Subject();
-  limit = 10;
+  limit = 9;
   searchText: string | null;
 
   constructor(

@@ -9,9 +9,16 @@ import {Driver} from '../dto/Driver';
 export class DriverCardComponent implements OnInit {
 
   @Input() driverObject: Driver;
-  constructor() { }
+  showMore: boolean = false;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+  }
+
+  setShowMore(showMore) {
+    this.showMore = showMore;
   }
 
 }

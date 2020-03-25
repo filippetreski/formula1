@@ -8,7 +8,15 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 export class TeamCardComponent implements OnInit {
   @Input() teamObject: Team;
-  constructor() {}
+  showMore: boolean = false;
 
-  ngOnInit(): void {}
+  constructor() {
+  }
+
+  ngOnInit(): void {
+  }
+
+  setShowMore(showMore) {
+    this.showMore = showMore;
+  }
 }

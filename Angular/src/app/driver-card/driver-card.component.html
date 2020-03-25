@@ -1,8 +1,23 @@
-<a *ngIf="driverObject.thumbnail" [href]="driverObject.thumbnail['value']"><img src="{{driverObject.thumbnail['value']}}" alt="Picture of driver"/></a>
-<span *ngIf="driverObject.name">
-  <a [routerLink]="['/driverDetails/'+driverObject.name['value']]" queryParamsHandling="merge">
-  <h3>{{driverObject.name['value']}}</h3>
-</a></span>
-<span *ngIf="driverObject.comment"><p>{{driverObject.comment['value']}}</p></span>
-<span *ngIf="driverObject.points"><p>Points: {{driverObject.points['value']}}</p></span>
-<span *ngIf="driverObject.subject"><a [href]="driverObject.subject['value']" target="_blank">dbpedia link</a></span>
+
+<div class="card" style="width: 18rem;">
+  <a *ngIf="driverObject.thumbnail" [href]="driverObject.thumbnail['value']"></a><img width="280px" height="360px" style="overflow: hidden;" src="{{driverObject.thumbnail['value']}}" alt="Picture of driver" class="card-img-top" />
+
+  <div class="card-body">
+    <span *ngIf="driverObject.name">
+      <a [routerLink]="['/driverDetails/'+driverObject.name['value']]" queryParamsHandling="merge">
+      <h3 class="card-title">{{driverObject.name['value']}}</h3>
+    </a></span>
+    <span *ngIf="driverObject.comment && !this.showMore"><p class="card-text">{{driverObject.comment['value'].substring(0,150)}} ...</p>
+    <p class="text-primary" style="cursor: pointer;" (click)="setShowMore(true)">Show More</p>
+    </span>
+
+    <span *ngIf="driverObject.comment && this.showMore"><p class="card-text">{{driverObject.comment['value']}}</p>
+    <p class="text-primary" style="cursor: pointer;" (click)="setShowMore(false)">Show Less</p>
+    </span>
+
+    <br>
+    <span *ngIf="driverObject.points"><p class="card-text">Points: {{driverObject.points['value']}}</p></span>
+    <br>
+    <span *ngIf="driverObject.subject"><a class="btn btn-primary "[href]="driverObject.subject['value']" target="_blank">DBpedia Link</a></span>
+  </div>
+</div>

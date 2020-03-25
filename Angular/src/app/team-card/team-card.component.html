@@ -1,15 +1,33 @@
-<span *ngIf="teamObject.picture">
-  <img src="{{ teamObject.picture['value'] }}" alt="Picture of team"
-/></span>
-<span *ngIf="teamObject.name">
-  <h3>{{ teamObject.name["value"] }}</h3></span
->
-<span *ngIf="teamObject.description"
-  ><p>{{ teamObject.description["value"] }}</p></span
->
-<span *ngIf="teamObject.wins"
-  ><p>Wins: {{ teamObject.wins["value"] }}</p></span
->
-<span *ngIf="teamObject.webLink"
-  ><a [href]="teamObject.webLink['value']" target="_blank">WEBPAGE</a></span
->
+
+
+<div class="card" style="width: 18rem;">
+  <span *ngIf="teamObject.picture">
+  <img width="280px" height="360px" style="overflow: hidden;" class="card-img-top" src="{{ teamObject.picture['value'] }}" alt="Picture of team"/>
+</span>
+  <span *ngIf="!teamObject.picture">
+  <img width="280px" height="360px" style="overflow: hidden;" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/3/33/F1.svg" alt="Picture of team"/>
+</span>
+
+  <div class="card-body">
+    <span *ngIf="teamObject.name">
+      <h5 class="card-title">{{ teamObject.name["value"] }}</h5></span>
+
+    <span *ngIf="teamObject.description && !this.showMore">
+        <p  class="card-text">{{ teamObject.description["value"].substring(0,150) }} ...</p>
+       <p class="text-primary" style="cursor: pointer;" (click)="setShowMore(true)">Show More</p>
+      </span>
+
+    <span *ngIf="teamObject.description && this.showMore">
+        <p  class="card-text">{{ teamObject.description["value"] }}</p>
+       <p class="text-primary" style="cursor: pointer;" (click)="setShowMore(false)">Show Less</p>
+      </span>
+    <br>
+    <span *ngIf="teamObject.wins">
+        <p class="card-text">Wins: {{ teamObject.wins["value"] }}</p>
+      </span>
+
+    <span *ngIf="teamObject.webLink">
+        <a class="btn btn-primary" [href]="teamObject.webLink['value']" target="_blank">Team Website</a>
+      </span>
+  </div>
+</div>

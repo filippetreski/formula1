@@ -30,13 +30,13 @@ export class HomeComponent implements OnInit {
       relativeTo: this.route
     });
     this.language$
-      .pipe(switchMap(it => this.api.getListOfDrivers(`${it}`, 4)))
+      .pipe(switchMap(it => this.api.getListOfDrivers(`${it}`, 6)))
       .subscribe(result => {
         this.drivers = result;
       });
 
     this.language$
-      .pipe(switchMap(it => this.api.getListOfTeams(`${it}`, 4)))
+      .pipe(switchMap(it => this.api.getListOfTeams(`${it}`, 6)))
       .subscribe(result => {
         this.teams = result;
       });
