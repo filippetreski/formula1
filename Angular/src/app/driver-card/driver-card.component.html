@@ -1,7 +1,12 @@
 <div class="card mb-4 mt-4" style="width: 18rem; min-height: 800px;">
-  <a *ngIf="driverObject.thumbnail" [href]="driverObject.thumbnail['value']"></a><img width="280px" height="360px"
+  <span *ngIf="driverObject.thumbnail">
+  <a  [href]="driverObject.thumbnail['value']"></a><img width="280px" height="360px"
     style="overflow: hidden;" src="{{driverObject.thumbnail['value']}}" alt="Picture of driver" class="card-img-top" />
-
+  </span>
+  <span *ngIf="!driverObject.thumbnail" style="min-height: 360px;">
+  <img style="overflow: hidden;" class="card-img-top"
+       src="https://www.raconteur.net/wp-content/uploads/2018/04/shutterstock_762930772.jpg" alt="Picture of team" />
+  </span>
   <div class="card-body">
     <span *ngIf="driverObject.name">
       <a [routerLink]="['/driverDetails/'+driverObject.name['value']]" queryParamsHandling="merge">
