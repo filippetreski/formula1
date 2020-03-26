@@ -22,27 +22,23 @@ public class FormulaOneTeamsService {
                 "\n" +
                 "FILTER(lang(?name) = \"" + language + "\" && lang(?description)=\"" + language + "\")\n" +
                 "}\n" +
-                "ORDER BY DESC(?wins)\n" +
                 "LIMIT " + limit.toString();
         return QueryUtil.getResultFromQuery(query);
     }
 
     public String search(String name,String language,Integer limit) {
 
-        String query = "SELECT (SAMPLE(?subject) AS ?subject) (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?picture) (SAMPLE(?description) AS ?description)  (SAMPLE(?webPageLink) AS ?webLink) (SAMPLE(?constructorName) AS ?constructorName) (SAMPLE(?wins) AS ?wins)\n" +
+        String query = "SELECT ?subject (SAMPLE(?name) AS ?name) (SAMPLE(?thumbnail) AS ?picture) (SAMPLE(?description) AS ?description)  (SAMPLE(?webPageLink) AS ?webLink) (SAMPLE(?constructorName) AS ?constructorName) (SAMPLE(?wins) AS ?wins)\n" +
                 "WHERE {\n" +
                 "?subject rdf:type dbo:FormulaOneTeam .\n" +
                 "?subject rdfs:label ?name .\n" +
                 "?subject dbp:poles ?poles .\n" +
                 "?subject dbp:wins ?wins .\n" +
-                "?subject foaf:homepage ?webPageLink.\n" +
+                "OPTIONAL {?subject foaf:homepage ?webPageLink.}\n" +
                 "OPTIONAL {?subject dbo:thumbnail ?thumbnail .}\n" +
                 "OPTIONAL {?subject rdfs:comment ?description .}\n" +
                 "OPTIONAL {?subject dbp:constructorName ?constructorName .}\n" +
-                "FILTER(lang(?name)= \"" + language + "\" && lang(?description) = \"" + language + "\" && contains(lcase(str(?name)),lcase(\"" + name + "\")))}\n" +
-                "GROUP BY ?subject\n" +
-                "ORDER BY DESC(?wins)\n" +
-                "LIMIT " + limit.toString();
+                "FILTER(lang(?name) = \"en\" &&lang(?description) = \"" + language + "\" && contains(lcase(str(?name)),lcase(\"" + name + "\")))}\n";
 
         return QueryUtil.getResultFromQuery(query);
     }

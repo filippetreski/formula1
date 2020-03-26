@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     private api: ApiService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.router.navigate([], {
@@ -30,13 +30,13 @@ export class HomeComponent implements OnInit {
       relativeTo: this.route
     });
     this.language$
-      .pipe(switchMap(it => this.api.getListOfDrivers(`${it}`, 6)))
+      .pipe(switchMap(it => this.api.getListOfDrivers(`${it}`, 3)))
       .subscribe(result => {
         this.drivers = result;
       });
 
     this.language$
-      .pipe(switchMap(it => this.api.getListOfTeams(`${it}`, 6)))
+      .pipe(switchMap(it => this.api.getListOfTeams(`${it}`, 3)))
       .subscribe(result => {
         this.teams = result;
       });
